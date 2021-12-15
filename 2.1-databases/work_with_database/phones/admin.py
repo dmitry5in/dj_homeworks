@@ -7,4 +7,3 @@ class PhoneAdmin(admin.ModelAdmin):
     list_display = ["id", "name", "price", "image", "release_date",]
 
 
-# Register your models here.
