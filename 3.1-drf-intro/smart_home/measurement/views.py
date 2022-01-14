@@ -4,15 +4,15 @@ from .serializers import SensorSerializer, SensorDetailSerializer, MeasurementSe
 
 
 class AllSensorsView(ListCreateAPIView):
-    sensor = Sensor.objects.all()
+    queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
 
 
 class OneSensorView(RetrieveUpdateAPIView):
-    sensor = Sensor.objects.all()
+    queryset = Sensor.objects.all()
     serializer_class = SensorDetailSerializer
 
 
 class MeasurementView(CreateAPIView):
-    measure = Measurement.objects.all()
+    queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
