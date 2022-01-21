@@ -36,12 +36,18 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         # через методы ViewSet.
         # само поле при этом объявляется как `read_only=True`
         validated_data["creator"] = self.context["request"].user
+        adv_open = Advertisement.objects.filter(creator=self.context["request"].user, status='OPEN').count()
+        if adv_open >= 10:
+            raise ValidationError('Превышено допустимое количество открытых объявлений!')
+
         return super().create(validated_data)
 
     def validate(self, data):
         """Метод для валидации. Вызывается при создании и обновлении."""
 
         adv = Advertisement.objects.filter(creator=self.context["request"].user, status='OPEN').count()
-        if adv >= 10 and data['status'] == 'OPEN':
-            raise ValidationError('Превышено допустимое количество открытых объявлений!')
+        if data.get('status', '') == 'OPEN':
+            if adv >= 10:
+                raise ValidationError('Превышено допустимое количество открытых объявлений!')
+
         return data
