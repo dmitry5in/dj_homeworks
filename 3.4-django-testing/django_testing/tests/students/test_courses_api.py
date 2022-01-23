@@ -56,6 +56,7 @@ def test_filter_by_id(client, course_factory):
 
     assert response.status_code == 200
     assert data['id'] == courses[3].id
+    assert data['name'] == courses[3].name
 
 
 @pytest.mark.django_db
